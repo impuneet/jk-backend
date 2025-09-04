@@ -185,7 +185,7 @@ export class QnaService {
       let context = '';
       const sources: any[] = [];
 
-      if (documentIds && documentIds.length > 0) {
+      if (documentIds && documentIds.length > 0 && userId) {
         // Search for relevant content in specified documents
         const relevantChunks = await this.searchRelevantChunks(userMessage, documentIds, userId);
         context = relevantChunks.map(chunk => chunk.content).join('\n\n');
@@ -194,7 +194,7 @@ export class QnaService {
           chunkId: chunk.id,
           content: chunk.content.substring(0, 200) + '...'
         })));
-      } else {
+      } else if (userId) {
         // Search across all user's processed documents
         const relevantChunks = await this.searchAllUserDocuments(userMessage, userId);
         context = relevantChunks.map(chunk => chunk.content).join('\n\n');
@@ -259,7 +259,7 @@ export class QnaService {
     );
   }
 
-  private async searchAllUserDocuments(query: string, userId: string) {
+  private async searchAllUserDocuments(query: string, userId: string ) {
     // Search across all user's processed documents
     const chunks = await this.prisma.documentChunk.findMany({
       where: {
