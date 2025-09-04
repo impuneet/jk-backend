@@ -15,7 +15,7 @@ export class UsersService {
   async findAll() {
     const users = await this.prisma.user.findMany({
       where: {
-        isDeleted: false,
+        deleted: false,
       },
       select: {
         id: true,
@@ -34,7 +34,7 @@ export class UsersService {
     const user = await this.prisma.user.findFirst({
       where: {
         id,
-        isDeleted: false,
+        deleted: false,
       },
       select: {
         id: true,
@@ -58,7 +58,7 @@ export class UsersService {
     return this.prisma.user.findFirst({
       where: {
         email,
-        isDeleted: false,
+        deleted: false,
       },
     });
   }
@@ -67,7 +67,7 @@ export class UsersService {
     const user = await this.prisma.user.findFirst({
       where: {
         id,
-        isDeleted: false,
+        deleted: false,
       },
     });
 
@@ -99,7 +99,7 @@ export class UsersService {
     const user = await this.prisma.user.findFirst({
       where: {
         id,
-        isDeleted: false,
+        deleted: false,
       },
     });
 
@@ -111,7 +111,7 @@ export class UsersService {
     await this.prisma.user.update({
       where: { id },
       data: {
-        isDeleted: true,
+        deleted: true,
         updatedAt: new Date(),
       },
     });

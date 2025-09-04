@@ -27,14 +27,14 @@ export class DocumentsService {
     const document = await this.prisma.document.create({
       data: {
         filename: file.filename,
-        originalName: file.originalname,
+        originalFileName: file.originalname,
         mimetype: file.mimetype,
         size: file.size,
         filePath: file.path,
         title: createDocumentDto.title || file.originalname,
         description: createDocumentDto.description,
         status: DocumentStatus.UPLOADED,
-        uploadedBy: userId,
+        ownerId: userId,
       },
       include: {
         user: {
@@ -67,8 +67,8 @@ export class DocumentsService {
 
     // Viewers can only see their own documents, admins and editors can see all
     const whereClause = user.role === UserRole.VIEWER 
-      ? { uploadedBy: user.id, isDeleted: false }
-      : { isDeleted: false };
+      ? { ownerId: user.id, deleted: false }
+      : { deleted: false };
 
     const [documents, total] = await Promise.all([
       this.prisma.document.findMany({
@@ -104,7 +104,7 @@ export class DocumentsService {
     const document = await this.prisma.document.findFirst({
       where: { 
         id,
-        isDeleted: false
+        deleted: false
       },
       include: {
         user: {
@@ -122,7 +122,7 @@ export class DocumentsService {
     }
 
     // Check permissions
-    if (user.role === UserRole.VIEWER && document.uploadedBy !== user.id) {
+    if (user.role === UserRole.VIEWER && document.ownerId !== user.id) {
       throw new ForbiddenException('Access denied');
     }
 
@@ -139,7 +139,7 @@ export class DocumentsService {
 
     return {
       filePath,
-      filename: document.originalName,
+      filename: document.originalFileName,
       mimetype: document.mimetype,
     };
   }
@@ -175,7 +175,7 @@ export class DocumentsService {
     await this.prisma.document.update({
       where: { id },
       data: { 
-        isDeleted: true,
+        deleted: true,
         updatedAt: new Date()
       }
     });
@@ -199,7 +199,7 @@ export class DocumentsService {
     return this.prisma.document.findMany({
       where: { 
         status,
-        isDeleted: false,
+        deleted: false,
       },
       include: {
         user: {

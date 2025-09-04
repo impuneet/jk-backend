@@ -27,7 +27,7 @@ export class QnaService {
   async getConversations(userId: string, query: ConversationsQueryDto) {
     const where: any = {
       userId,
-      isDeleted: false
+      deleted: false
     };
 
     if (query.search) {
@@ -42,7 +42,7 @@ export class QnaService {
         where,
         include: {
           messages: {
-            where: { isDeleted: false }, // Only include non-deleted messages
+            where: { deleted: false }, // Only include non-deleted messages
             orderBy: { createdAt: 'desc' },
             take: 1 // Only get the latest message for preview
           }
@@ -67,11 +67,11 @@ export class QnaService {
       where: {
         id: conversationId,
         userId,
-        isDeleted: false
+        deleted: false
       },
       include: {
         messages: {
-          where: { isDeleted: false },
+          where: { deleted: false },
           orderBy: { createdAt: 'asc' }
         }
       }
@@ -141,7 +141,7 @@ export class QnaService {
       where: {
         id: conversationId,
         userId,
-        isDeleted: false
+        deleted: false
       }
     });
 
@@ -154,17 +154,17 @@ export class QnaService {
       this.prisma.conversation.update({
         where: { id: conversationId },
         data: { 
-          isDeleted: true,
+          deleted: true,
           updatedAt: new Date()
         }
       }),
       this.prisma.message.updateMany({
         where: { 
           conversationId,
-          isDeleted: false // Only update non-deleted messages
+          deleted: false // Only update non-deleted messages
         },
         data: { 
-          isDeleted: true,
+          deleted: true,
           updatedAt: new Date()
         }
       })
@@ -235,10 +235,10 @@ export class QnaService {
     const chunks = await this.prisma.documentChunk.findMany({
       where: {
         documentId: { in: documentIds },
-        isDeleted: false,
+        deleted: false,
         document: {
-          uploadedBy: userId,
-          isDeleted: false
+          ownerId: userId,
+          deleted: false
         }
       },
       include: {
@@ -263,10 +263,10 @@ export class QnaService {
     // Search across all user's processed documents
     const chunks = await this.prisma.documentChunk.findMany({
       where: {
-        isDeleted: false,
+        deleted: false,
         document: {
-          uploadedBy: userId,
-          isDeleted: false,
+          ownerId: userId,
+          deleted: false,
           status: 'PROCESSED' // Only search in processed documents
         }
       },
@@ -314,7 +314,7 @@ export class QnaService {
       where: {
         id: conversationId,
         userId,
-        isDeleted: false
+        deleted: false
       }
     });
 

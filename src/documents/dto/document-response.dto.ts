@@ -8,7 +8,7 @@ export class DocumentResponseDto {
   filename: string;
 
   @ApiProperty({ example: 'My Document.pdf' })
-  originalName: string;
+  originalFileName: string;
 
   @ApiProperty({ example: 'application/pdf' })
   mimetype: string;
