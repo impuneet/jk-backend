@@ -19,15 +19,15 @@ describe('DocumentsController', () => {
   const mockDocument = {
     id: 'doc-id',
     filename: 'test.pdf',
-    originalName: 'test-document.pdf',
+    originalFileName: 'test-document.pdf',
     mimetype: 'application/pdf',
     size: 1024,
     filePath: '/uploads/test.pdf',
     title: 'Test Document',
     description: 'Test description',
     status: 'UPLOADED',
-    uploadedBy: 'user-id',
-    isDeleted: false,
+    ownerId: 'user-id',
+    deleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
     user: {

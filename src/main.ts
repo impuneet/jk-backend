@@ -20,9 +20,9 @@ async function bootstrap() {
 
   // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle('User Document Management API')
+    .setTitle('JK Tech Document Management API')
     .setDescription(
-      'A microservice for user and document management with ingestion control',
+      'Document management and Q&A API built with NestJS and Prisma',
     )
     .setVersion('1.0')
     .addBearerAuth()

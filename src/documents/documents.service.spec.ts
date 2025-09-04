@@ -20,13 +20,13 @@ describe('DocumentsService', () => {
   const mockDocument = {
     id: 'f3895b13-1b74-45ce-8573-85095702b267',
     filename: 'test.pdf',
-    originalName: 'test-document.pdf',
+    originalFileName: 'test-document.pdf',
     mimetype: 'application/pdf',
     size: 1024,
     filePath: '/uploads/test.pdf',
     title: 'Test Document',
     description: 'Test description',
-    uploadedBy: '9baa37ea-65f3-4bb5-a15d-515b1ba4e9c7',
+    ownerId: '9baa37ea-65f3-4bb5-a15d-515b1ba4e9c7',
     createdAt: new Date(),
     updatedAt: new Date(),
     user: {
@@ -87,13 +87,13 @@ describe('DocumentsService', () => {
       expect(prisma.document.create).toHaveBeenCalledWith({
         data: {
           filename: mockFile.filename,
-          originalName: mockFile.originalname,
+          originalFileName: mockFile.originalname,
           mimetype: mockFile.mimetype,
           size: mockFile.size,
           filePath: mockFile.path,
           title: createDto.title,
           description: createDto.description,
-          uploadedBy: '9baa37ea-65f3-4bb5-a15d-515b1ba4e9c7',
+          ownerId: '9baa37ea-65f3-4bb5-a15d-515b1ba4e9c7',
           status: 'UPLOADED',
         },
         include: {
@@ -161,7 +161,7 @@ describe('DocumentsService', () => {
       expect(prisma.document.update).toHaveBeenCalledWith({ 
         where: { id: 'f3895b13-1b74-45ce-8573-85095702b267' },
         data: { 
-          isDeleted: true,
+          deleted: true,
           updatedAt: expect.any(Date)
         }
       });

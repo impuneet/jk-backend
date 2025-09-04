@@ -82,7 +82,7 @@ export class IngestionService implements OnModuleInit {
           select: {
             id: true,
             filename: true,
-            originalName: true,
+            originalFileName: true,
             title: true,
           },
         },
@@ -128,7 +128,7 @@ export class IngestionService implements OnModuleInit {
           select: {
             id: true,
             filename: true,
-            originalName: true,
+            originalFileName: true,
             title: true,
           },
         },
@@ -178,7 +178,7 @@ export class IngestionService implements OnModuleInit {
             select: {
               id: true,
               filename: true,
-              originalName: true,
+              originalFileName: true,
               title: true,
             },
           },

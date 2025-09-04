@@ -14,7 +14,7 @@ describe('QnaService', () => {
     id: 'conversation-id',
     title: 'Test Conversation',
     userId: 'user-id',
-    isDeleted: false,
+    deleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
     messages: [],
@@ -27,7 +27,7 @@ describe('QnaService', () => {
     content: 'Test message',
     role: 'user',
     metadata: null,
-    isDeleted: false,
+    deleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -38,7 +38,7 @@ describe('QnaService', () => {
     content: 'Test content for searching',
     chunkIndex: 0,
     embedding: null,
-    isDeleted: false,
+    deleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
     document: {

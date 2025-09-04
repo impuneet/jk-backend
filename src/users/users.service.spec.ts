@@ -16,7 +16,7 @@ describe('UsersService', () => {
     password: 'hashedPassword',
     role: UserRole.VIEWER,
     active: true,
-    isDeleted: false,
+    deleted: false,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -83,7 +83,7 @@ describe('UsersService', () => {
       expect(result).toEqual(mockUsers);
       expect(prisma.user.findMany).toHaveBeenCalledWith({
         where: {
-          isDeleted: false,
+          deleted: false,
         },
         select: {
           id: true,
@@ -108,7 +108,7 @@ describe('UsersService', () => {
       expect(prisma.user.findFirst).toHaveBeenCalledWith({
         where: {
           id: 'user-id',
-          isDeleted: false,
+          deleted: false,
         },
         select: {
           id: true,
@@ -141,7 +141,7 @@ describe('UsersService', () => {
       expect(prisma.user.findFirst).toHaveBeenCalledWith({
         where: {
           email: 'test@example.com',
-          isDeleted: false,
+          deleted: false,
         },
       });
     });
@@ -199,7 +199,7 @@ describe('UsersService', () => {
       expect(prisma.user.update).toHaveBeenCalledWith({
         where: { id: 'user-id' },
         data: {
-          isDeleted: true,
+          deleted: true,
           updatedAt: expect.any(Date),
         },
       });

@@ -92,7 +92,7 @@ export class QnaService {
       where: {
         id: conversationId,
         userId,
-        isDeleted: false
+        deleted: false
       }
     });
 
